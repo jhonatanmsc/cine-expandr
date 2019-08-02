@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cine expandr!</title>
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap-4.3.1/dist/css/bootstrap.min.css' %}">
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
+    <script src="https://kit.fontawesome.com/d925213be9.js"></script>
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'vendors/bootstrap-4.3.1/dist/js/bootstrap.bundle.min.js' %}">
+    <script>
+        $(document).ready(function() {
+            $(".dropdown-toggle").dropdown();
+        });
+    </script>
+    {% block js %}
+    {% endblock %}
+</body>
+</html>

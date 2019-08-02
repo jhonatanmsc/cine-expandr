@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="padding-left: 10rem !important;padding-right: 10rem !important;">
+        <a href="/" class="navbar-brand router-link-exact-active router-link-active" target="_self">
+            <img alt="expandr" src="{% static 'images/brand-white.png' %}">
+        </a>
+
+        <b style="color: white; min-width: 50rem; text-align: right; padding-right: 1rem;">{{ user }}</b>
+        <div class="dropdown">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% if user.is_authenticated %}
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'login' %}">Logar</a>
+              {% endif %}
+          </div>
+        </div>
+
+    </nav>
+
+    <div id="content">
+        <div>
+            <div>
+                <div class="d-flex align-items-start flex-column">
+                    <h1 id="home-label">Escolha sua poltrona!</h1>
+                    <p class="text-secondary size-2">{{ showtime.session.movie.title }} - {{ showtime.time }} BRT</p>
+                </div>
+            </div>
+            <div class="">
+                <div class="wrapper">
+                    {% for seat in p_2 %}
+                    <div>
+                        {% if seat.is_available %}
+                        <button type="buttom" class="btn btn-success" data-toggle="modal" data-target="#{{seat}}">
+                            <i class="fas fa-couch mr-03"></i>{{ seat }}
+                        </button>
+                        <form action="{% url 'select' pk=pk pk_time=showtime.id seat=seat %}" method="POST">
+                          {% csrf_token %}
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{seat}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Escolha sua poltrona!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+
+
+                              <div class="form-group text-left">
+                                <label for="username">Poltrona:</label>
+                                  <p>{{ seat }}</p>
+                              </div>
+                              <div class="form-group text-left">
+                                <label for="exampleInputPwd1">Nome:</label>
+                                  <div class="form-control">
+                                      {{ user }}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                              <button type="submit" class="btn btn-primary">Reservar</button>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        </form>
+                        {% else %}
+                        <button type="submit" class="btn btn-danger" disabled>
+                            <i class="fas fa-couch mr-03"></i>{{ seat }}
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="wrapper">
+                {% for seat in p_1 %}
+                <div>
+                        {% if seat.is_available %}
+                        <button type="buttom" class="btn btn-success" data-toggle="modal" data-target="#{{seat}}">
+                            <i class="fas fa-couch mr-03"></i>{{ seat }}
+                        </button>
+                        <form action="{% url 'select' pk=pk pk_time=showtime.id seat=seat %}" method="POST">
+                          {% csrf_token %}
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{seat}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Escolha sua poltrona!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+
+
+                              <div class="form-group text-left">
+                                <label for="username">Poltrona:</label>
+                                  <p>{{ seat }}</p>
+                              </div>
+                              <div class="form-group text-left">
+                                <label for="exampleInputPwd1">Nome:</label>
+                                  <div class="form-control">
+                                      {{ user }}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                              <button type="submit" class="btn btn-primary">Reservar</button>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        </form>
+                        {% else %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-couch mr-03"></i>{{ seat }}
+                        </button>
+                        {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center">
+                <label>Legenda: </label>
+                <button type="button" class="btn btn-success" style="opacity: 100 !important;" disabled>Disponível</button>
+                <button type="button" class="btn btn-danger" style="opacity: 100 !important;" disabled>Indisponível</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block css %}
+<style>
+#content{
+  padding: 3rem 10rem 3rem 10rem !important;
+}
+.size-2{
+  font-size: 1.25rem;
+}
+.wrapper{
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-gap: 1rem;
+  grid-auto-rows: minmax(5px, auto);
+
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.wrapper > div{
+    padding: 0 1rem 0 1rem;
+}
+.mr-03{
+    margin-right: .3rem;
+}
+.wrapper > div:nth-child(0n+1),
+.wrapper > div:nth-child(8n+1){
+    padding-left: 0px;
+}
+.wrapper > div:nth-child(8n){
+    padding-right: 0px;
+    text-align: right!important;
+}
+</style>
+{% endblock %}
