@@ -12,5 +12,6 @@ sistema de bilheteria para o desafio proposto por Expandr
 $ pip install -r requirements.txt
 $ python manage.py migrate
 $ python manage.py createsuperuser
+$ python manage.py runserver
 ```
 ## OBS: para criar filmes, sessões e poltronas acesse o /admin na url ou acesse online [cine-expandr](https://cine-expandr.herokuapp.com/) com informações ja cadastradas
