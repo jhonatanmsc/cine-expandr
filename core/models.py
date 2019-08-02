@@ -1,5 +1,6 @@
 import pdb
 
+from django import template
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -56,6 +57,9 @@ class Showtime(models.Model):
         return self.start_at.date().strftime('%d-%m-%y')
 
 
+# register = template.Library()
+
+
 class Seat(models.Model):
     description = models.CharField('descrição', max_length=254)
 
@@ -66,9 +70,11 @@ class Seat(models.Model):
     def __str__(self):
         return self.description
 
-    @property
-    def is_available(self):
-        return False if self.item.all() else True
+    # @register.filter
+    def is_available(self, date):
+        res = self.item.filter(showtime__date=date)
+        pdb.set_trace()
+        return False if res else True
 
 
 class ItemSeat(models.Model):
