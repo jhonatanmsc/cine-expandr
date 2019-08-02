@@ -2,7 +2,7 @@ import pdb
 import datetime
 from functools import reduce
 
-from django.contrib.auth import logout, authenticate
+from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -131,6 +131,6 @@ class CreateUserView(View):
             # pdb.set_trace()
             user, created = User.objects.get_or_create(username=userDATA['username'])
             user.set_password(userDATA['password'])
-            authenticate(user)
+            login(request, user)
             user.save()
         return redirect('home')
