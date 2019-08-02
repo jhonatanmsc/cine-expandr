@@ -14,4 +14,4 @@ $ python manage.py migrate
 $ python manage.py createsuperuser
 $ python manage.py runserver
 ```
-## OBS: para criar filmes, sessões e poltronas acesse o /admin na url ou acesse online [cine-expandr](https://cine-expandr.herokuapp.com/) com informações ja cadastradas
+## OBS: para criar filmes, sessões e poltronas acesse o /admin na url ou acesse online [cine-expandr](https://cine-expandr.herokuapp.com/) com informações já cadastradas
